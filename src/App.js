@@ -10,7 +10,7 @@ import {
 import { formatDistance, subDays } from "date-fns";
 import Search from './Search';
 import Locate from './Locate';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 
