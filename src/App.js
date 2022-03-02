@@ -6,17 +6,7 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-// import usePlacesAutocomplete, {
-//   getGeocode,
-//   getLatLng,
-// } from "use-places-autocomplete";
-// import {
-//   Combobox,
-//   ComboboxInput,
-//   ComboboxPopover,
-//   ComboboxList,
-//   ComboboxOption,
-// } from "@reach/combobox";
+
 import { formatDistance, subDays } from "date-fns";
 import Search from './Search';
 import Locate from './Locate';
@@ -46,7 +36,7 @@ const mapContainerStyle = {
 export default function App() {
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCJPvUs0mK-WOsx6M0uOf7xzrvI3MVcPcw",
+    googleMapsApiKey: process.env.GOOGLE_API_KEY,
     libraries,
   });
 
@@ -78,7 +68,7 @@ export default function App() {
       <div>
         <h1>
           <span role="img" aria-label="tent">
-            <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-corona-covid-19-color-line-others-phat-plus-19.png" />          </span>
+            <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-corona-covid-19-color-line-others-phat-plus-19.png" alt="logo"/>          </span>
           INFECTED SPOT{" "}
 
         </h1>
