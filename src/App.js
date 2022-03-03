@@ -5,6 +5,8 @@ import {
   useLoadScript,
   Marker,
   InfoWindow,
+  Polygon,
+  Circle
 } from "@react-google-maps/api";
 
 import { formatDistance, subDays } from "date-fns";
@@ -17,15 +19,48 @@ import mapStyles from "./mapStyles";
 const libraries = ['places'];
 
 const googleOptions = {
-  zoom: 10,
-  center: {
-    lat: 25.2048,
-    lng: 55.2708
-  },
+  zoom: 14,
+  center: { lat: 31.483854943560956, lng: 74.38654789589322 },
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
   streetViewControl: true,
+}
+
+const polygonOptions = {
+  fillColor: "#0000FF",
+  fillOpacity: 0.35,
+  strokeColor: "#0000FF",
+  strokeOpacity: 0.8,
+  strokeWeight: 2,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  geodesic: false,
+  zIndex: 1,
+  paths: [
+    { lat: 31.47484396429631, lng: 74.3750173087037 },
+    { lat: 31.4869206579151, lng: 74.3855642934348 },
+    { lat: 31.47912130479585, lng: 74.40879716186939 },
+    { lat: 31.46282862364127, lng: 74.40894467214535 },
+    { lat: 31.464937758152946, lng: 74.39001165528641 },
+    { lat: 31.47484396429631, lng: 74.3750173087037 },
+  ],
+}
+
+const circleOptions = {
+  strokeColor: '#FF0000',
+  strokeOpacity: 1,
+  strokeWeight: 5,
+  fillColor: '#FF0000',
+  fillOpacity: 0.2,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  visible: true,
+  radius: 100,
+  center: { lat: 31.483854943560956, lng: 74.38654789589322 },
+  zIndex: 1
 }
 
 const mapContainerStyle = {
@@ -36,7 +71,7 @@ const mapContainerStyle = {
 export default function App() {
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.GOOGLE_API_KEY,
+    googleMapsApiKey: "AIzaSyCJPvUs0mK-WOsx6M0uOf7xzrvI3MVcPcw",
     libraries,
   });
 
@@ -51,8 +86,8 @@ export default function App() {
   }, [])
   useEffect(() => console.log({ marker }), [marker]);
 
-  const panTo = useCallback(({lat, lng}) => {
-    mapRef.current.panTo({lat, lng});
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(15);
   }, [])
   const Spinner = () => {
@@ -61,14 +96,14 @@ export default function App() {
         <Spin />
       </div>)
   }
-  
+
 
   const renderMap = () => {
     return (
       <div>
         <h1>
           <span role="img" aria-label="tent">
-            <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-corona-covid-19-color-line-others-phat-plus-19.png" alt="logo"/>          </span>
+            <img src="https://img.icons8.com/external-others-phat-plus/64/000000/external-corona-covid-19-color-line-others-phat-plus-19.png" alt="logo" />          </span>
           INFECTED SPOT{" "}
 
         </h1>
@@ -80,6 +115,12 @@ export default function App() {
           onClick={onMapClick}
           onLoad={mapLoad}
         >
+          <Circle
+            options={circleOptions}
+          />
+          <Polygon
+            options={polygonOptions}
+          />
           {
             marker.map((point, i) => <Marker key={i} position={point} icon={{
               url: "https://img.icons8.com/external-flatart-icons-lineal-color-flatarticons/30/000000/external-coronavirus-virus-transmission-flatart-icons-lineal-color-flatarticons-2.png",
